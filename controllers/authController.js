@@ -30,14 +30,14 @@ module.exports.login_get = (req, res) => {
 };
 
 module.exports.signup_post = async (req, res) => {
-  const { fullName, phoneNumber, email, passwordHash } = req.body;
+  const { fullName, phoneNumber, email, password } = req.body;
 
   try {
     const user = await User.create({
       fullName,
       phoneNumber,
       email,
-      passwordHash,
+      password,
     });
     res.status(201).json(user);
   } catch (err) {

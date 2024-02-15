@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const { isEmail, isMobilePhone } = require('validator');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   fullName: {
     type: String,
     required: [true, 'Please enter an email'],
-    unique: true,
     lowercase: true,
   },
   phoneNumber: {
@@ -21,9 +21,18 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [isEmail, 'Please enter a valid email'],
   },
-  passwordHash: {
+  password: {
     type: String,
+    required: [true, 'Please enter a password'],
+    minLength: [6, 'Minimum password length is 6 characters'],
   },
+});
+
+// password hashing
+userSchema.pre('save', async function (next) {
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
 
 const User = mongoose.model('user', userSchema);
