@@ -26,6 +26,12 @@ mongoose
   .catch((err) => console.log(err));
 
 //meter routes
+app.get('/', (req, res) => {
+  res.send(
+    'welcome to the smart power API. Available routes 1: /login_post 2: signup_post 3: addmeter_post '
+  );
+});
+
 app.post('/addmeter', requireAuth, checkUser, async (req, res) => {
   const { meterName, meterNumber, meterLocation, meterUser } = req.body;
 
