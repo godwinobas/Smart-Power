@@ -1,5 +1,7 @@
 const User = require('../models/User.js');
+const Meter = require('../models/Meter.js');
 const jwt = require('jsonwebtoken');
+const { requireAuth } = require('../middleware/authMiddleware.js');
 
 // Error handling
 const handleErrors = (err) => {

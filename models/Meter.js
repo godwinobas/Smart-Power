@@ -6,10 +6,6 @@ const meterSchema = new mongoose.Schema({
     required: [true, 'Please enter meter-name'],
     lowercase: true,
   },
-  meterUser: {
-    type: Number,
-    required: [true, 'Please enter a meter number'],
-  },
   meterNumber: {
     type: Number,
     required: [true, 'Please enter a meter number'],
@@ -17,10 +13,10 @@ const meterSchema = new mongoose.Schema({
   meterLocation: {
     type: String,
     lowercase: true,
+    required: [true, 'Please enter meter location'],
   },
-  transactionHistory: {
-    type: String,
-    lowercase: true,
+  meterUser: {
+    type: mongoose.ObjectId,
   },
 });
 

@@ -1,22 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const Meter = require('./models/Meter');
 const authRoutes = require('./routes/authroutes');
 const cookieParser = require('cookie-parser');
-const { requireAuth } = require('./middleware/authMiddleware');
+const { requireAuth, checkUser } = require('./middleware/authMiddleware');
+require('dotenv').config();
 
 const app = express();
 
 // middlewares
-app.use(express.static('public'));
 app.use(express.json());
 app.use(cookieParser());
-
-// view engine
-app.set('view engine', 'ejs');
+// app.use(express.static('public'));
 
 // database connection
-const dbURI =
-  'mongodb+srv://godwinobas0:DKYmCno2r9MhJE5u@cluster0.p5qtyij.mongodb.net/';
+const dbURI = process.env.MONGODB_URI;
 mongoose
   .connect(dbURI, {
     useNewUrlParser: true,
@@ -27,7 +25,26 @@ mongoose
   .then(console.log('Connected to db and listening on port 3000'))
   .catch((err) => console.log(err));
 
-// routes
-app.get('/', (req, res) => res.render('home'));
-app.get('/smoothies', requireAuth, (req, res) => res.render('smoothies'));
+//meter routes
+app.post('/addmeter', requireAuth, checkUser, async (req, res) => {
+  const { meterName, meterNumber, meterLocation, meterUser } = req.body;
+
+  try {
+    const meter = await Meter.create({
+      meterName,
+      meterNumber,
+      meterLocation,
+      meterUser,
+    });
+    // const token = createToken(user._id);
+    const confirmationMessage = 'Meter added successfully';
+    res.status(201).json({ confirmationMessage, meterId: meter._id });
+  } catch (err) {
+    const error = err.message;
+    const errorAction = 'Kindly check details and try again';
+    res.status(400).json({ error, errorAction });
+  }
+});
+
+// auth routes
 app.use(authRoutes);
