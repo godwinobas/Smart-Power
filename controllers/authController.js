@@ -43,11 +43,11 @@ const createToken = (id) => {
 };
 
 module.exports.signup_get = (req, res) => {
-  res.render('signup');
+  res.send('This not a get route');
 };
 
 module.exports.login_get = (req, res) => {
-  res.render('login');
+  res.send('This is not a get route');
 };
 
 module.exports.signup_post = async (req, res) => {
