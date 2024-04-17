@@ -6,9 +6,7 @@ const { requireAuth, checkUser } = require('../middleware/authMiddleware.js');
 // const { requireAuth, checkUser } = require('..middleware/authMiddleware.js');
 
 module.exports.home_get = (req, res) => {
-  res.send(
-    'welcome to the smart power API. Available routes 1: /login_post 2: signup_post 3: addmeter_post '
-  );
+  res.send('*******WELCOME TO SMART POWER*******');
 };
 
 module.exports.addmeter_post =
