@@ -22,4 +22,20 @@ const meterSchema = new mongoose.Schema({
 
 const Meter = mongoose.model('meter', meterSchema);
 
+// // static method to login user
+// userSchema.statics.meterExists = async function (email, meterNumber) {
+//   const user = await this.findOne({ meterNumber });
+//   console.log(user);
+// return;
+
+//   if (user) {
+//     const auth = await bcrypt.compare(password, user.password);
+//     if (auth) {
+//       return user;
+//     }
+//     throw Error('incorrect password');
+//   }
+//   throw Error('incorrect email');
+// };
+
 module.exports = Meter;
